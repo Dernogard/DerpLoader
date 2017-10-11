@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JSimple">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/java/ru/nogard/libs/JSimple.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
