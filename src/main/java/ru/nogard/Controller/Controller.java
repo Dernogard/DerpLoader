@@ -1,5 +1,9 @@
 package ru.nogard.Controller;
 
+import javafx.application.Application;
+import javafx.application.HostServices;
+import javafx.event.EventHandler;
+import ru.nogard.Main;
 import ru.nogard.Model.Downloader;
 import ru.nogard.View.MainWindow;
 import javafx.application.Platform;
@@ -62,6 +66,12 @@ public class Controller {
     private TextField chooseFolder_tf;
     @FXML
     private ImageView statusProxy;
+    @FXML
+    private TextField imgHeight_tf;
+    @FXML
+    private TextField imgWidth_tf;
+    @FXML
+    private CheckBox imageSizeBox;
 
     private ObservableList<String> tagsForShow = FXCollections.observableArrayList();
     private ObservableList<String> tagsForIgnore = FXCollections.observableArrayList();
@@ -118,7 +128,9 @@ public class Controller {
     private void download(MouseEvent event) {
         updateStatus("Начинаю процесс загрузки");
 
-        new Downloader(this, !event.getSource().equals(btnDownload), checkInteger(numPagesForDownload_tf.getText()), notSafeForWorkBox.isSelected());
+        new Downloader(this, !event.getSource().equals(btnDownload), checkInteger(numPagesForDownload_tf.getText()),
+                notSafeForWorkBox.isSelected(), checkInteger(imgWidth_tf.getText()), checkInteger(imgHeight_tf.getText()),
+                imageSizeBox.isSelected());
     }
 
     @FXML
@@ -194,6 +206,11 @@ public class Controller {
             statusProxy.setVisible(true);
         });
         thread.start();
+    }
+
+    @FXML
+    private void goToTheProxySite () {
+        Main.getHS().showDocument("https://hidemy.name/ru/proxy-list/?type=hs#list");
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/

@@ -32,15 +32,10 @@ class AnswerCreation {
 
                 Proxy proxy = new Proxy(Settings.TYPE_PROXY, new InetSocketAddress(Settings.IP_PROXY, Settings.PORT_PROXY));
                 URL urlJSON = new URL(request);
-                //URL urlJSON = new URL("http://google.ru");
-
-                System.out.println("1");
 
                 BufferedReader bis = new BufferedReader(new InputStreamReader(urlJSON.openConnection(proxy).getInputStream()));
-
-                System.out.println("2");
                 list = bis.readLine();
-                System.out.println("3");
+                bis.close();
 
             } catch (MalformedURLException e) {
                 controller.updateStatus("Ошибка создания URL");

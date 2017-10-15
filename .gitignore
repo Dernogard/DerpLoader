@@ -43,6 +43,8 @@ buildNumber.properties
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
+.idea
+.directory
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
@@ -86,3 +88,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+Будет удалено src/test/

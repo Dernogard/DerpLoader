@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -12,6 +13,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -57,9 +59,14 @@
                         <TextField fx:id="kye_tf" layoutX="74.0" layoutY="396.0" onKeyReleased="#changeSettings" prefHeight="26.0" prefWidth="194.0" />
                         <Label layoutX="30.0" layoutY="401.0" text="Key :" />
                         <Button layoutX="334.0" layoutY="517.0" lineSpacing="20.0" mnemonicParsing="false" onAction="#writeProperties" prefHeight="108.0" prefWidth="356.0" text="Сделать эти данные данными по умолчанию (ВНИМАНИЕ! Процесс необратим)" textAlignment="CENTER" wrapText="true" />
-                        <ImageView fx:id="statusProxy" fitHeight="70.0" fitWidth="70.0" layoutX="165.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label layoutX="178.0" layoutY="212.0" text="Жди..." />
+                        <ImageView fx:id="statusProxy" fitHeight="70.0" fitWidth="70.0" layoutX="165.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@proxy_ok.png" />
+                           </image></ImageView>
                         <Label layoutX="24.0" layoutY="192.0" text="Статус прокси: " />
                         <Button layoutX="28.0" layoutY="214.0" mnemonicParsing="false" onAction="#changeImageStatusProxy" text="Проверить" />
+                        <Hyperlink layoutX="28.0" layoutY="256.0" onAction="#goToTheProxySite" text="Выбрать прокси" />
                      </children>
                   </AnchorPane>
             </content>
@@ -113,6 +120,13 @@
                         <Button layoutX="184.0" layoutY="85.0" mnemonicParsing="false" onAction="#hndlChooseDir" text="Выбрать" />
                         <TextField fx:id="chooseFolder_tf" layoutX="277.0" layoutY="85.0" prefHeight="26.0" prefWidth="385.0" />
                         <Button layoutX="676.0" layoutY="84.0" mnemonicParsing="false" onAction="#saveDir4Save" prefHeight="28.0" prefWidth="94.0" text="Запомнить" textAlignment="CENTER" wrapText="true" />
+                        <TextField fx:id="imgHeight_tf" layoutX="940.0" layoutY="67.0" prefHeight="26.0" prefWidth="50.0" text="1024" />
+                        <TextField fx:id="imgWidth_tf" layoutX="940.0" layoutY="104.0" prefHeight="26.0" prefWidth="50.0" text="1280" />
+                        <Label layoutX="874.0" layoutY="76.0" text="Высота" />
+                        <Label layoutX="868.0" layoutY="109.0" text="Ширина" />
+                        <Label layoutX="880.0" layoutY="21.0" text="не менее чем:" />
+                        <Label layoutX="904.0" layoutY="4.0" text="Размер" />
+                        <CheckBox fx:id="imageSizeBox" layoutX="880.0" layoutY="43.0" mnemonicParsing="false" text="Учитывать" />
                      </children>
                   </AnchorPane>
                </content>

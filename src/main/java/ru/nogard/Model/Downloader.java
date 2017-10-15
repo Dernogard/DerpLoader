@@ -18,12 +18,18 @@ public class Downloader {
     private boolean dwPopular;
     private int countFile = 0;
     private boolean safe;
+    private int userWidth;
+    private int userHeight;
+    private boolean isImageSize;
 
-    public Downloader(Controller controller, boolean popular, int numPages, boolean safe) {
+    public Downloader(Controller controller, boolean isPopular, int numPages, boolean isSafe, int userWidth, int userHeight, boolean isImgSize) {
         this.controller = controller;
-        this.dwPopular = popular;
+        this.dwPopular = isPopular;
         this.numPagesForDownload = numPages;
-        this.safe = safe;
+        this.safe = isSafe;
+        this.userWidth = userWidth;
+        this.userHeight = userHeight;
+        this.isImageSize = isImgSize;
 
         startDownload();
     }
@@ -91,10 +97,16 @@ public class Downloader {
 
             for (Object obc : ja) {
                 if (!Thread.currentThread().isInterrupted()) {
-                    String link = ((JSONObject) obc).get("image").toString();
-                    link = "https://" + link.substring(2);
+                    if (checkImageToSize(
+                            ((JSONObject) obc).get("width").toString(),
+                            ((JSONObject) obc).get("height").toString()))
+                    {
+                        String link = ((JSONObject) obc).get("image").toString();
+                        link = "https://" + link.substring(2);
 
-                    downloadUsingNIO(link);
+                        downloadUsingNIO(link);
+                    } else
+                        controller.updateStatus("Файл не удовлетворяет условию размерости");
                 }
             }
         }
@@ -132,5 +144,14 @@ public class Downloader {
             }
         }
         
+    }
+
+    private boolean checkImageToSize (String w, String h) {
+        int width = Integer.parseInt(w);
+        int height = Integer.parseInt(h);
+        double ratio = (double)width / height;
+        double userRatio = (double)userWidth / userHeight;
+
+        return !isImageSize || width >= userWidth && height >= userHeight && ratio >= userRatio;
     }
 }
