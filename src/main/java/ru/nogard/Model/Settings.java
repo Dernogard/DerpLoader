@@ -8,13 +8,15 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.Properties;
 
 public class Settings {
 
 
     private static Properties properties = new Properties();
-    private static String pathToProperties = "/home/velz/Dropbox/cloploader/src/main/resources/config.properties";
+
+    private static String pathToProperties = String.valueOf(System.getProperty("user.dir") + File.separator + "config.properties");
 
 
     public static String IP_PROXY;
@@ -26,10 +28,8 @@ public class Settings {
     public static String DIR4SAVE;
 
     public static void loadProperties() {
-       // try (FileInputStream fis = new FileInputStream(pathToProperties)) {
-        try (InputStream fis =  Settings.class.getClassLoader().getResourceAsStream("/config.properties")) {
 
-            //System.out.println(System.getProperty("java.class.path") );
+        try (FileInputStream fis =  new FileInputStream(pathToProperties)) {
 
             properties.load(fis);
 
@@ -51,7 +51,7 @@ public class Settings {
 
     public static void saveProperties(Controller controller) {
 
-        try (FileOutputStream fos = new FileOutputStream(pathToProperties)) {
+        try (OutputStream fos = new FileOutputStream(pathToProperties)) {
 
             properties.setProperty("proxy_ip", IP_PROXY);
             properties.setProperty("proxy_port", String.valueOf(PORT_PROXY));
