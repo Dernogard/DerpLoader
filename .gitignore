@@ -45,6 +45,7 @@ buildNumber.properties
 .idea/dictionaries
 .idea
 .directory
+download/
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
