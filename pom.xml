@@ -26,6 +26,15 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.excelsiorjet</groupId>
+                <artifactId>excelsior-jet-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <mainClass>ru.nogard.Main</mainClass>
+                    <jetHome>/home/velz/jet12.0-eval-x86/</jetHome>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
