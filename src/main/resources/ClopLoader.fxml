@@ -5,9 +5,6 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -19,6 +16,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -30,28 +28,42 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <GridPane layoutX="14.0" layoutY="68.0" prefHeight="113.0" prefWidth="311.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="89.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="222.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <Pane fx:id="proxyBlock" layoutX="5.0" layoutY="65.0" prefHeight="235.0" prefWidth="358.0">
                            <children>
-                              <Label contentDisplay="CENTER" prefHeight="16.0" prefWidth="155.0" text="IP - адрес" textAlignment="CENTER" />
-                              <Label prefHeight="16.0" prefWidth="156.0" text="Port" textAlignment="CENTER" GridPane.rowIndex="1" />
-                              <Label prefHeight="16.0" prefWidth="219.0" text="Тип прокси должен быть HTTP" textAlignment="CENTER" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font></Label>
-                              <TextField fx:id="ip_tf" onKeyReleased="#changeSettings" GridPane.columnIndex="1" />
-                              <TextField fx:id="port_tf" onKeyReleased="#changeSettings" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <GridPane prefHeight="113.0" prefWidth="311.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="89.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="222.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label contentDisplay="CENTER" prefHeight="16.0" prefWidth="155.0" text="IP - адрес" textAlignment="CENTER" />
+                                    <Label prefHeight="16.0" prefWidth="156.0" text="Port" textAlignment="CENTER" GridPane.rowIndex="1" />
+                                    <Label prefHeight="16.0" prefWidth="219.0" text="Тип прокси должен быть HTTP" textAlignment="CENTER" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="ip_tf" onKeyReleased="#changeSettings" GridPane.columnIndex="1" />
+                                    <TextField fx:id="port_tf" onKeyReleased="#changeSettings" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <Label layoutX="169.0" layoutY="151.0" text="Жди..." />
+                              <ImageView fx:id="statusProxy" fitHeight="70.0" fitWidth="70.0" layoutX="156.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@proxy_ok.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="14.0" layoutY="131.0" text="Статус прокси: " />
+                              <Button layoutX="22.0" layoutY="159.0" mnemonicParsing="false" onAction="#changeImageStatusProxy" text="Проверить" />
+                              <Hyperlink layoutX="14.0" layoutY="187.0" onAction="#goToTheProxySite" text="Выбрать прокси" />
                            </children>
-                        </GridPane>
-                        <Label layoutX="46.0" layoutY="34.0" text="Введите настройки прокси-сервера" />
+                        </Pane>
+                        <Label layoutX="55.0" layoutY="14.0" text="Введите настройки прокси-сервера" />
                         <TextArea editable="false" layoutX="395.0" layoutY="46.0" prefHeight="124.0" prefWidth="592.0" text="Ресур Derpibooru заблокирован на территории РФ.&#10;&quot;Зеркало&quot; ресурса - Trixiebooru без прокси работает с перебоями. &#10;&#10;Введите данные одного из бесплатных прокси, найденных на просторах сети интернет по запросу в поисковике &quot;бесплатный прокси&quot;. Или оставьте стандарные значения, но не факт, что они еще &quot;живы&quot; на момент использования вами программы. Рекомендую использовать тип HTTP." wrapText="true" />
                         <Separator layoutX="19.0" layoutY="292.0" prefHeight="28.0" prefWidth="987.0" />
                         <Label layoutX="75.0" layoutY="350.0" text="Введите ключ авторизации" />
@@ -59,14 +71,7 @@
                         <TextField fx:id="kye_tf" layoutX="74.0" layoutY="396.0" onKeyReleased="#changeSettings" prefHeight="26.0" prefWidth="194.0" />
                         <Label layoutX="30.0" layoutY="401.0" text="Key :" />
                         <Button layoutX="334.0" layoutY="517.0" lineSpacing="20.0" mnemonicParsing="false" onAction="#writeProperties" prefHeight="108.0" prefWidth="356.0" text="Сделать эти данные данными по умолчанию (ВНИМАНИЕ! Процесс необратим)" textAlignment="CENTER" wrapText="true" />
-                        <Label layoutX="178.0" layoutY="212.0" text="Жди..." />
-                        <ImageView fx:id="statusProxy" fitHeight="70.0" fitWidth="70.0" layoutX="165.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@proxy_ok.png" />
-                           </image></ImageView>
-                        <Label layoutX="24.0" layoutY="192.0" text="Статус прокси: " />
-                        <Button layoutX="28.0" layoutY="214.0" mnemonicParsing="false" onAction="#changeImageStatusProxy" text="Проверить" />
-                        <Hyperlink layoutX="28.0" layoutY="256.0" onAction="#goToTheProxySite" text="Выбрать прокси" />
+                        <CheckBox fx:id="dontWantProxyBox" layoutX="86.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#hideProxyBlock" text="Нет, спасибо, обойдусь" />
                      </children>
                   </AnchorPane>
             </content>
@@ -75,9 +80,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="choiceTagsForShowList" layoutX="14.0" layoutY="44.0" prefHeight="536.0" prefWidth="255.0" />
-                        <Label layoutX="58.0" layoutY="22.0" text="Выбор тегов для показа" />
-                        <ListView fx:id="choiceTagsForIgnoreList" layoutX="755.0" layoutY="37.0" prefHeight="536.0" prefWidth="255.0" />
+                        <ListView fx:id="choiceTagsForShowList" layoutX="18.0" layoutY="38.0" prefHeight="470.0" prefWidth="255.0" />
+                        <Label layoutX="62.0" layoutY="14.0" text="Выбор тегов для показа" />
+                        <ListView fx:id="choiceTagsForIgnoreList" layoutX="755.0" layoutY="37.0" prefHeight="470.0" prefWidth="255.0" />
                         <Label layoutX="771.0" layoutY="14.0" text="Выбор тегов для игнорирования" />
                         <ListView fx:id="tagsForShowList" layoutX="412.0" layoutY="44.0" prefHeight="160.0" prefWidth="200.0" />
                         <Label layoutX="456.0" layoutY="22.0" text="Теги для показа" />
@@ -96,37 +101,49 @@
                            </font>
                         </Button>
                         <Separator layoutX="285.0" layoutY="270.0" prefHeight="1.0" prefWidth="456.0" />
-                        <Button fx:id="btnOpenTagShowList" layoutX="62.0" layoutY="593.0" mnemonicParsing="false" text="Выбрать файл тегов" />
-                        <Button fx:id="btnOpenTagIgnoreList" layoutX="803.0" layoutY="593.0" mnemonicParsing="false" text="Выбрать файл тегов" />
-                        <TextArea editable="false" layoutX="235.0" layoutY="583.0" prefHeight="65.0" prefWidth="555.0" text="При созаднии или редактировании файлов с тегами, учитывайте:&#10;- каждый тег с новой строки&#10;- в тегах из нескольких слов, пробелы заменить знаком &quot;+&quot; " wrapText="true" />
+                        <Button fx:id="btnOpenTagShowList" layoutX="62.0" layoutY="515.0" mnemonicParsing="false" text="Выбрать файл тегов" />
+                        <Button fx:id="btnOpenTagIgnoreList" layoutX="803.0" layoutY="515.0" mnemonicParsing="false" text="Выбрать файл тегов" />
+                        <TextArea editable="false" layoutX="236.0" layoutY="528.0" prefHeight="65.0" prefWidth="555.0" text="При созаднии или редактировании файлов с тегами, учитывайте:&#10;- каждый тег с новой строки&#10;- в тегах из нескольких слов, пробелы заменить знаком &quot;+&quot; " wrapText="true" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Ручное теггирование">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="handRequestField" layoutX="46.0" layoutY="115.0" prefHeight="26.0" prefWidth="932.0" promptText="apple AND (Fluttershy OR twilight sparkle OR Pinkie Pie) AND NOT equestria girls AND NOT apple bloom" />
+                        <TextArea editable="false" layoutX="47.0" layoutY="23.0" prefHeight="55.0" prefWidth="930.0" text="Данная вкладка предназначена для вбивания ручного запроса картинок с Derpibooru. Использовать её имеет смысл только тогда,&#10;когда вы понимаете, что делаете. " wrapText="true" />
+                        <TextArea editable="false" layoutX="47.0" layoutY="172.0" prefHeight="490.0" prefWidth="929.0" text="Возможные опции:&#10;&#10;AND = и&#10;&#10;OR = или, используется в скобках&#10;&#10;NOT = не должен фигурировать это тег&#10;&#10;Пример:&#10;&#10;Ввод:    &#10;apple AND (Fluttershy OR twilight sparkle OR Pinkie Pie) AND NOT equestria girls AND NOT apple bloom&#10;&#10;Вывод:  &#10;картинки, на которых фигурирует яблоко И (Флаттершай ИЛИ Твайлайт ИЛИ Пинки) НЕ эквестрийские девчонки НЕТ эпплблум " wrapText="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             <Tab text="Лог и запуск">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextArea fx:id="textAreaLog" editable="false" layoutX="-2.0" layoutY="132.0" prefHeight="492.0" prefWidth="1024.0" wrapText="true" />
+                        <TextArea fx:id="textAreaLog" editable="false" layoutX="-2.0" layoutY="176.0" prefHeight="480.0" prefWidth="1024.0" wrapText="true" />
                         <Button fx:id="btnDownload" layoutX="277.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#download" text="Скачать по тегам!" />
-                        <CheckBox fx:id="notSafeForWorkBox" layoutX="207.0" layoutY="15.0" mnemonicParsing="false" selected="true" text="Вкл" />
-                        <Label layoutX="14.0" layoutY="16.0" text="Безопасный поиск (SFW)" />
-                        <Button layoutX="-1.0" layoutY="624.0" mnemonicParsing="false" onAction="#clearTextAreaLog" prefHeight="32.0" prefWidth="1024.0" text="Очистить область уведомлений!" />
-                        <Label layoutX="14.0" layoutY="44.0" text="Сколько страниц скачать?" />
-                        <TextField fx:id="numPagesForDownload_tf" layoutX="207.0" layoutY="39.0" prefHeight="26.0" prefWidth="37.0" text="1" />
-                        <Button fx:id="btnDownloadPopular" layoutX="267.0" layoutY="47.0" mnemonicParsing="false" onMouseClicked="#download" text="Скачать популярное!" />
-                        <Button fx:id="btnStopPlease" layoutX="484.0" layoutY="20.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="175.0" text="Попытаться прервать процесс" textAlignment="CENTER" textFill="#eb0a0a" wrapText="true" />
-                        <Label layoutX="14.0" layoutY="90.0" text="Папка для сохранения" />
-                        <Button layoutX="184.0" layoutY="85.0" mnemonicParsing="false" onAction="#hndlChooseDir" text="Выбрать" />
-                        <TextField fx:id="chooseFolder_tf" layoutX="277.0" layoutY="85.0" prefHeight="26.0" prefWidth="385.0" />
-                        <Button layoutX="676.0" layoutY="84.0" mnemonicParsing="false" onAction="#saveDir4Save" prefHeight="28.0" prefWidth="94.0" text="Запомнить" textAlignment="CENTER" wrapText="true" />
-                        <TextField fx:id="imgHeight_tf" layoutX="940.0" layoutY="67.0" prefHeight="26.0" prefWidth="50.0" text="1024" />
-                        <TextField fx:id="imgWidth_tf" layoutX="940.0" layoutY="104.0" prefHeight="26.0" prefWidth="50.0" text="1280" />
-                        <Label layoutX="874.0" layoutY="76.0" text="Высота" />
-                        <Label layoutX="868.0" layoutY="109.0" text="Ширина" />
-                        <Label layoutX="880.0" layoutY="21.0" text="не менее чем:" />
-                        <Label layoutX="904.0" layoutY="4.0" text="Размер" />
-                        <CheckBox fx:id="imageSizeBox" layoutX="880.0" layoutY="43.0" mnemonicParsing="false" text="Учитывать" />
+                        <CheckBox fx:id="notSafeForWorkBox" layoutX="207.0" layoutY="28.0" mnemonicParsing="false" selected="true" text="Вкл" />
+                        <Label layoutX="14.0" layoutY="29.0" text="Безопасный поиск (SFW)" />
+                        <Button layoutY="655.0" mnemonicParsing="false" onAction="#clearTextAreaLog" prefHeight="32.0" prefWidth="1024.0" text="Очистить область уведомлений!" />
+                        <Label layoutX="14.0" layoutY="64.0" text="Сколько страниц скачать?" />
+                        <TextField fx:id="numPagesForDownload_tf" layoutX="207.0" layoutY="59.0" prefHeight="26.0" prefWidth="37.0" text="1" />
+                        <Button fx:id="btnDownloadPopular" layoutX="452.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#download" text="Скачать популярное!" />
+                        <Button fx:id="btnStopPlease" layoutX="277.0" layoutY="48.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="547.0" text="Попытаться прервать процесс" textAlignment="CENTER" textFill="#eb0a0a" wrapText="true" />
+                        <Label layoutX="14.0" layoutY="137.0" text="Папка для сохранения" />
+                        <Button layoutX="184.0" layoutY="132.0" mnemonicParsing="false" onAction="#hndlChooseDir" text="Выбрать" />
+                        <TextField fx:id="chooseFolder_tf" layoutX="277.0" layoutY="132.0" prefHeight="26.0" prefWidth="438.0" />
+                        <Button layoutX="729.0" layoutY="131.0" mnemonicParsing="false" onAction="#saveDir4Save" prefHeight="28.0" prefWidth="94.0" text="Запомнить" textAlignment="CENTER" wrapText="true" />
+                        <TextField fx:id="imgHeight_tf" layoutX="948.0" layoutY="87.0" prefHeight="26.0" prefWidth="50.0" text="1024" />
+                        <TextField fx:id="imgWidth_tf" layoutX="948.0" layoutY="124.0" prefHeight="26.0" prefWidth="50.0" text="1280" />
+                        <Label layoutX="882.0" layoutY="96.0" text="Высота" />
+                        <Label layoutX="876.0" layoutY="129.0" text="Ширина" />
+                        <Label layoutX="888.0" layoutY="41.0" text="не менее чем:" />
+                        <Label layoutX="912.0" layoutY="24.0" text="Размер" />
+                        <CheckBox fx:id="imageSizeBox" layoutX="888.0" layoutY="63.0" mnemonicParsing="false" text="Учитывать" />
+                        <Button fx:id="handRequestButton" layoutX="645.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#download" text="Скачать ручной запрос" />
                      </children>
                   </AnchorPane>
                </content>
@@ -134,15 +151,4 @@
         </tabs>
       </TabPane>
    </center>
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Файл">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#closeProgram" text="Выход" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
 </BorderPane>

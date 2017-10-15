@@ -15,16 +15,16 @@ public class Downloader {
 
     private Controller controller;
     private int numPagesForDownload;
-    private boolean dwPopular;
+    private Settings.typeDownload dwPopular;
     private int countFile = 0;
     private boolean safe;
     private int userWidth;
     private int userHeight;
     private boolean isImageSize;
 
-    public Downloader(Controller controller, boolean isPopular, int numPages, boolean isSafe, int userWidth, int userHeight, boolean isImgSize) {
+    public Downloader(Controller controller, Settings.typeDownload type, int numPages, boolean isSafe, int userWidth, int userHeight, boolean isImgSize) {
         this.controller = controller;
-        this.dwPopular = isPopular;
+        this.dwPopular = type;
         this.numPagesForDownload = numPages;
         this.safe = isSafe;
         this.userWidth = userWidth;
@@ -96,6 +96,7 @@ public class Downloader {
             controller.updateStatus("\nВсего файлов: " + ja.size());
 
             for (Object obc : ja) {
+
                 if (!Thread.currentThread().isInterrupted()) {
                     if (checkImageToSize(
                             ((JSONObject) obc).get("width").toString(),
@@ -109,6 +110,7 @@ public class Downloader {
                         controller.updateStatus("Файл не удовлетворяет условию размерости");
                 }
             }
+
         }
     }
 

@@ -1,8 +1,6 @@
 package ru.nogard.Controller;
 
-import javafx.application.Application;
-import javafx.application.HostServices;
-import javafx.event.EventHandler;
+import javafx.scene.layout.Pane;
 import ru.nogard.Main;
 import ru.nogard.Model.Downloader;
 import ru.nogard.View.MainWindow;
@@ -72,6 +70,14 @@ public class Controller {
     private TextField imgWidth_tf;
     @FXML
     private CheckBox imageSizeBox;
+    @FXML
+    private CheckBox dontWantProxyBox;
+    @FXML
+    private Pane proxyBlock;
+    @FXML
+    private Button handRequestButton;
+    @FXML
+    private TextField handRequestField;
 
     private ObservableList<String> tagsForShow = FXCollections.observableArrayList();
     private ObservableList<String> tagsForIgnore = FXCollections.observableArrayList();
@@ -128,9 +134,11 @@ public class Controller {
     private void download(MouseEvent event) {
         updateStatus("Начинаю процесс загрузки");
 
-        new Downloader(this, !event.getSource().equals(btnDownload), checkInteger(numPagesForDownload_tf.getText()),
-                notSafeForWorkBox.isSelected(), checkInteger(imgWidth_tf.getText()), checkInteger(imgHeight_tf.getText()),
-                imageSizeBox.isSelected());
+        Settings.typeDownload type = checkTypeRequest(event);
+
+        new Downloader(this, type,
+                checkInteger(numPagesForDownload_tf.getText()), notSafeForWorkBox.isSelected(),
+                checkInteger(imgWidth_tf.getText()), checkInteger(imgHeight_tf.getText()), imageSizeBox.isSelected());
     }
 
     @FXML
@@ -160,11 +168,6 @@ public class Controller {
     private void clearTextAreaLog () {
         Thread thread = new Thread(textAreaLog::clear);
         thread.start();
-    }
-
-    @FXML
-    private void closeProgram() {
-        System.exit(0);
     }
 
     @FXML
@@ -213,6 +216,11 @@ public class Controller {
         Main.getHS().showDocument("https://hidemy.name/ru/proxy-list/?type=hs#list");
     }
 
+    @FXML
+    private void hideProxyBlock () {
+        proxyBlock.setVisible(!dontWantProxyBox.isSelected());
+    }
+
     /*-------------------------------------------------------------------------------------------------------------*/
 
     private int checkInteger (String x) {
@@ -220,6 +228,18 @@ public class Controller {
             return Integer.parseInt(x);
         } catch (NumberFormatException e) {
             return 1;
+        }
+    }
+
+    private Settings.typeDownload checkTypeRequest (MouseEvent event) {
+        if (event.getSource().equals(btnDownload)) {
+            return Settings.typeDownload.TAGS_REQUEST;
+        }
+        else if (event.getSource().equals(handRequestButton)) {
+            return Settings.typeDownload.HANDLER_REQUEST;
+        }
+        else {
+            return Settings.typeDownload.POPULAR_REQUEST;
         }
     }
 
@@ -310,11 +330,19 @@ public class Controller {
         return btnStopPlease;
     }
 
+    public boolean isDontWantProxyBox() {
+        return dontWantProxyBox.isSelected();
+    }
+
+    public String getHandRequestField() {
+        return handRequestField.getText();
+    }
     /*-------------------------------------------------------------------------------------------------------------*/
 
     public void lockDownloadButtons (boolean lock) {
         btnDownload.setDisable(lock);
         btnDownloadPopular.setDisable(lock);
+        handRequestButton.setDisable(lock);
     }
 
     public void updateStatus (String message) {

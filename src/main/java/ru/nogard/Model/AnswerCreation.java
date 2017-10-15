@@ -13,37 +13,42 @@ import java.net.URL;
 class AnswerCreation {
 
     private String answer;
+    private boolean useProxy;
 
     AnswerCreation(String request, Controller controller) {
+        this.useProxy = !controller.isDontWantProxyBox();
         this.answer = createStringFromJSON (request, controller);
     }
 
     private String createStringFromJSON (String request, Controller controller) {
         String list = "";
 
-        if (!Settings.checkProxy()) {
+            if (useProxy && !Settings.checkProxy()) {
 
-            controller.updateStatus("Ошибка прокси");
-            Thread.currentThread().interrupt();
-
-        } else {
-
-            try {
-
-                Proxy proxy = new Proxy(Settings.TYPE_PROXY, new InetSocketAddress(Settings.IP_PROXY, Settings.PORT_PROXY));
-                URL urlJSON = new URL(request);
-
-                BufferedReader bis = new BufferedReader(new InputStreamReader(urlJSON.openConnection(proxy).getInputStream()));
-                list = bis.readLine();
-                bis.close();
-
-            } catch (MalformedURLException e) {
-                controller.updateStatus("Ошибка создания URL");
-            } catch (IOException e) {
-                controller.updateStatus("Ошибка на этапе получения списка картинок. Есть смысл сменить прокси, даже если он рабочий");
+                controller.updateStatus("Ошибка прокси");
+                Thread.currentThread().interrupt();
             }
-        }
 
+            else {
+
+                try {
+
+                    Proxy proxy = new Proxy(Settings.TYPE_PROXY, new InetSocketAddress(Settings.IP_PROXY, Settings.PORT_PROXY));
+                    URL urlJSON = new URL(request);
+
+                    BufferedReader bis = new BufferedReader(new InputStreamReader(
+                            (useProxy ? urlJSON.openConnection(proxy) : urlJSON.openConnection())
+                                    .getInputStream()));
+
+                    list = bis.readLine();
+                    bis.close();
+
+                } catch (MalformedURLException e) {
+                    controller.updateStatus("Ошибка создания URL");
+                } catch (IOException e) {
+                    controller.updateStatus("Ошибка на этапе получения списка картинок. Есть смысл сменить прокси, даже если он рабочий");
+                }
+            }
         return list;
     }
 

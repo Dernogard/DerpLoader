@@ -15,9 +15,7 @@ public class Settings {
 
 
     private static Properties properties = new Properties();
-
     private static String pathToProperties = String.valueOf(System.getProperty("user.dir") + File.separator + "config.properties");
-
 
     public static String IP_PROXY;
     public static int PORT_PROXY;
@@ -138,4 +136,9 @@ public class Settings {
             return false;
         }
     }
+
+    public enum typeDownload {
+        HANDLER_REQUEST, POPULAR_REQUEST, TAGS_REQUEST
+    }
+
 }
