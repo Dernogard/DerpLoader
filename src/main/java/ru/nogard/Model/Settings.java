@@ -64,7 +64,7 @@ public class Settings {
 
     }
 
-    public static void saveProperties (String filePath, boolean isShow) {
+    public static void saveProperties (Controller controller, String filePath, boolean isShow) {
 
         try (FileOutputStream fos = new FileOutputStream(pathToProperties)) {
 
@@ -72,22 +72,22 @@ public class Settings {
             properties.store(fos, "");
 
         } catch (FileNotFoundException e){
-            System.out.println("Не найден файл настроек");
+            controller.updateStatus("Не найден файл настроек");
         } catch (IOException e) {
-            System.out.println("Ошибка чтения файла настроек");
+            controller.updateStatus("Ошибка чтения файла настроек");
         }
     }
 
-    public static void saveProperties (String dirPath) {
+    public static void saveProperties (Controller controller, String dirPath) {
         try (FileOutputStream fos = new FileOutputStream(pathToProperties)){
 
             properties.setProperty("dir4save", dirPath);
             properties.store(fos, "");
 
         } catch (FileNotFoundException e){
-            System.out.println("Не найден файл настроек");
+            controller.updateStatus("Не найден файл настроек");
         } catch (IOException e) {
-            System.out.println("Ошибка чтения файла настроек");
+            controller.updateStatus("Ошибка чтения файла настроек");
         }
     }
 

@@ -187,7 +187,7 @@ public class Controller {
 
     @FXML
     private void saveDir4Save () {
-        Settings.saveProperties(chooseFolder_tf.getText());
+        Settings.saveProperties(this, chooseFolder_tf.getText());
     }
 
     @FXML
@@ -306,12 +306,12 @@ public class Controller {
             if (event.getSource().equals(btnOpenTagShowList)) {
                 choiceTagsForShowList.setItems(readTagsFromFile(filePath));
                 choiceTagsForShowList.refresh();
-                Settings.saveProperties(filePath, true);
+                Settings.saveProperties(this, filePath, true);
             }
             else {
                 choiceTagsForIgnoreList.setItems(readTagsFromFile(filePath));
                 choiceTagsForIgnoreList.refresh();
-                Settings.saveProperties(filePath, false);
+                Settings.saveProperties(this, filePath, false);
             }
         }
     }
